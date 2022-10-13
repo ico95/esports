@@ -1,9 +1,12 @@
-export const fetchAllMatches = (matchData) => {
+import * as dateConverter from "../utils/dateConverter";
+
+export const groupMatchesByDate = (matchData) => {
   let events = matchData.XmlSports.Sport[0].Event;
   let eventData = [];
   let currentEventData = {};
   let currentMatches = [];
   let currentMatchData = {};
+  let matchDate = "";
 
   events.forEach((match) => {
     currentEventData = {};
@@ -17,7 +20,8 @@ export const fetchAllMatches = (matchData) => {
       currentMatchData = {};
       currentMatchData.matchName = game["$"]["Name"];
       currentMatchData.matchId = game["$"]["ID"];
-      currentMatchData.startDate = game["$"]["StartDate"];
+      matchDate = game["$"]["StartDate"];
+      currentMatchData.startDate = dateConverter.convertDate(matchDate);
       currentMatchData.matchBetFirstTeam =
         game["Bet"][0]["Odd"][0]["$"]["Value"] || "X";
       currentMatchData.matchBetSecondTeam =
@@ -29,23 +33,34 @@ export const fetchAllMatches = (matchData) => {
     eventData.push(currentEventData);
   });
 
-  console.log(eventData);
   return eventData;
 };
 
 export const groupMatchesByEvent = (matchData) => {
-  let data = [...matchData];
   let sortedData = [];
-  data.reduce((prev, curr) => {
-    let currentEventName = curr.eventName.split(", ");
+  matchData.forEach((match) => {
+    let currentEventName = match.eventName.split(", ");
     let currentGame = currentEventName[0];
     let currentEvent = currentEventName[1];
     let found = sortedData.find((el) => el.gameName === currentGame);
 
     found
-      ? found.matches.push([{eventName: currentEvent, eventMatches: curr.matches}])
-      : sortedData.push({ gameName: currentGame, matches: [{eventName: currentEvent, eventMatches: curr.matches}] });
+      ? found.matches.push({
+          eventName: currentEvent,
+          eventId: match.eventId,
+          eventMatches: match.matches,
+        })
+      : sortedData.push({
+          gameName: currentGame,
+          matches: [
+            {
+              eventName: currentEvent,
+              eventId: match.eventId,
+              eventMatches: match.matches,
+            },
+          ],
+        });
   });
-  console.log('Sorted');
-  console.log(sortedData);
+
+  return sortedData;
 };

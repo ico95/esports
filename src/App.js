@@ -1,16 +1,19 @@
-import './App.css';
+import "./App.css";
 
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider } from "@chakra-ui/react";
 
-import Header from './components/Header/Header';
-import BasicTable from './components/Table/BasicTable';
+import Header from "./components/Header/Header";
+import View from "./components/Views/View";
+import { ViewProvider } from "./components/contexts/viewContext";
 
 function App() {
   return (
     <>
       <ChakraProvider>
-        <Header />
-        <BasicTable />
+        <ViewProvider>
+          <Header />
+          <View />
+        </ViewProvider>
       </ChakraProvider>
     </>
   );
