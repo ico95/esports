@@ -1,6 +1,6 @@
 import { Box, Button, Flex, HStack, Icon } from '@chakra-ui/react';
 import { IoLogoGameControllerB } from 'react-icons/io';
-import * as auth from '../../services/auth';
+import * as dataService from '../../services/dataService';
 
 let Header = () => {
 
@@ -11,7 +11,7 @@ let Header = () => {
                     <HStack spacing={3} alignItems={'center'}>
                         <Icon as={IoLogoGameControllerB} />
                         <Box fontSize={'18px'} fontWeight='bold'>Esports</Box>
-                        <Button colorScheme='green' onClick={() => auth.fetchAllMatches()}>Sort by league</Button>
+                        <Button colorScheme='green' onClick={() => dataService.fetchAllMatches()}>Sort by league</Button>
                     </HStack>
                 </Flex>
             </Box>
