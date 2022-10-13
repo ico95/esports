@@ -35,20 +35,20 @@ let BasicTable = () => {
                   <Th>{eventItem.eventName}</Th>
                   <Th>1</Th>
                   <Th>X</Th>
-                  <Th>1</Th>
+                  <Th>2</Th>
                 </Tr>
               </Thead>
               <Tbody>
-                {eventItem.matches.forEach((match) => {
+                {eventItem.matches.map((match) => (
                   <Tr key={match.matchId}>
-                    <Td>
+                    <Td fontWeight='bold'>
                       {match.startDate} {match.matchName}
                     </Td>
-                    <Td>{eventItem.matchBetFirstTeam}</Td>
-                    <Td>X</Td>
-                    <Td>{eventItem.matchBetSecondTeam}</Td>
-                  </Tr>;
-                })}
+                    <Td color="blue">{match.matchBetFirstTeam}</Td>
+                    <Td></Td>
+                    <Td color="blue">{match.matchBetSecondTeam}</Td>
+                  </Tr>
+                ))}
               </Tbody>
             </>
           ))}
