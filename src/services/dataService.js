@@ -1,5 +1,3 @@
-// const baseUrl = 'http://localhost:8081';
-
 export const fetchAllMatches = (matchData) => {
   let events = matchData.XmlSports.Sport[0].Event;
   let eventData = [];
@@ -35,4 +33,19 @@ export const fetchAllMatches = (matchData) => {
   return eventData;
 };
 
-export const groupMatchesByEvent = (matchData) => {};
+export const groupMatchesByEvent = (matchData) => {
+  let data = [...matchData];
+  let sortedData = [];
+  data.reduce((prev, curr) => {
+    let currentEventName = curr.eventName.split(", ");
+    let currentGame = currentEventName[0];
+    let currentEvent = currentEventName[1];
+    let found = sortedData.find((el) => el.gameName === currentGame);
+
+    found
+      ? found.matches.push([{eventName: currentEvent, eventMatches: curr.matches}])
+      : sortedData.push({ gameName: currentGame, matches: [{eventName: currentEvent, eventMatches: curr.matches}] });
+  });
+  console.log('Sorted');
+  console.log(sortedData);
+};

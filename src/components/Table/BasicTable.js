@@ -11,13 +11,15 @@ import {
 import * as dataService from "../../services/dataService";
 
 let BasicTable = () => {
+  const baseUrl = "http://localhost:8081";
   const [eventData, setEventData] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:8081/matches")
+    fetch(`${baseUrl}/matches`)
       .then((response) => response.json())
       .then((data) => {
         let convertedData = dataService.fetchAllMatches(data);
         setEventData(convertedData);
+        // dataService.groupMatchesByEvent(convertedData)
       })
       .catch((err) => {
         console.log(err);
@@ -41,7 +43,7 @@ let BasicTable = () => {
               <Tbody>
                 {eventItem.matches.map((match) => (
                   <Tr key={match.matchId}>
-                    <Td fontWeight='bold'>
+                    <Td fontWeight="bold">
                       {match.startDate} {match.matchName}
                     </Td>
                     <Td color="blue">{match.matchBetFirstTeam}</Td>
