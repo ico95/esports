@@ -4,8 +4,11 @@ import { useViewContext } from "../contexts/viewContext";
 
 let Header = () => {
   const { viewMode, updateViewMode } = useViewContext();
+
   let clickHandler = () => {
-    viewMode === "default" ? updateViewMode("sorted") : updateViewMode("default");
+    viewMode === "default"
+      ? updateViewMode("sorted")
+      : updateViewMode("default");
   };
 
   return (
